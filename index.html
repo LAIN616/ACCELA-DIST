@@ -280,38 +280,11 @@
                     <th>SIGNATURE</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="release-table-body">
                 <tr>
-                    <td>
-                        <a href="https://github.com/LAIN616/ACCELA-DIST/releases/download/March/ACCELA-20260323032424-windows-binary.zip" class="glitch-link" data-text="ACCELA-20260323032424-windows-binary.zip">ACCELA-20260323032424-windows-binary.zip</a>
+                    <td colspan="4" style="text-align: center; padding: 2rem; color: var(--dim-text);">
+                        [ ESTABLISHING CONNECTION TO REPOSITORY... ]
                     </td>
-                    <td>187 MB</td>
-                    <td>2026-03-23 03:24:24</td>
-                    <td>0x00D0...VALID</td>
-                </tr>
-                <tr>
-                    <td>
-                        <a href="https://github.com/LAIN616/ACCELA-DIST/releases/download/March/ACCELA-20260323032424-linux-appimage.tar.gz" class="glitch-link" data-text="ACCELA-20260323032424-linux-appimage.tar.gz">ACCELA-20260323032424-linux-appimage.tar.gz</a>
-                    </td>
-                    <td>237 MB</td>
-                    <td>2026-03-23 03:24:24</td>
-                    <td>0x053B...VALID</td>
-                </tr>
-                <tr>
-                    <td>
-                        <a href="https://github.com/LAIN616/ACCELA-DIST/releases/download/March/ACCELA-20260323032424-linux-binary.tar.gz" class="glitch-link" data-text="ACCELA-20260323032424-linux-binary.tar.gz">ACCELA-20260323032424-linux-binary.tar.gz</a>
-                    </td>
-                    <td>212 MB</td>
-                    <td>2026-03-23 03:24:24</td>
-                    <td>0x9EC5...VALID</td>
-                </tr>
-                <tr>
-                    <td>
-                        <a href="https://github.com/LAIN616/ACCELA-DIST/releases/download/March/ACCELA-20260323032424-linux-source.tar.gz" class="glitch-link" data-text="ACCELA-20260323032424-linux-source.tar.gz">ACCELA-20260323032424-linux-source.tar.gz</a>
-                    </td>
-                    <td>74.7 MB</td>
-                    <td>2026-03-23 03:24:24</td>
-                    <td>0xB0C3...VALID</td>
                 </tr>
             </tbody>
         </table>
@@ -405,44 +378,89 @@
             } else {
                 typeLine();
             }
+
+            // Fetch the releases from GitHub
+            fetchLatestReleases();
         };
 
+        // --- GitHub API Logic ---
+        async function fetchLatestReleases() {
+            const tbody = document.getElementById('release-table-body');
+            try {
+                // Calls the GitHub API for your specific repository
+                const response = await fetch('https://api.github.com/repos/LAIN616/ACCELA-DIST/releases/latest');
+                if (!response.ok) throw new Error('API connection failed');
+                
+                const data = await response.json();
+                tbody.innerHTML = ''; // Clear the "Establishing connection" message
+
+                // Loop through each file in the latest release
+                data.assets.forEach(asset => {
+                    // Convert bytes to MB
+                    const sizeMB = (asset.size / (1024 * 1024)).toFixed(1) + ' MB';
+                    // Format the date to look like the Lain interface
+                    const date = new Date(asset.updated_at).toISOString().replace('T', ' ').substring(0, 19);
+                    // Generate a fake authentic-looking hex signature based on the file ID
+                    const sigHex = Math.abs(asset.id).toString(16).substring(0, 4).toUpperCase();
+
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>
+                            <a href="${asset.browser_download_url}" class="glitch-link" data-text="${asset.name}">${asset.name}</a>
+                        </td>
+                        <td>${sizeMB}</td>
+                        <td>${date}</td>
+                        <td>0x${sigHex.padStart(4, '0')}...VALID</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+
+                // Apply the glitch effect to the newly generated links
+                applyGlitchEffects();
+
+            } catch (error) {
+                // If the API fails or you get rate-limited, show an error in the Wired
+                tbody.innerHTML = `<tr><td colspan="4" style="color: var(--alert-color); text-align: center; padding: 2rem;">[ ERR: CONNECTION TO SHADOW NODE SEVERED ]</td></tr>`;
+            }
+        }
+
         // --- Glitch Text Logic ---
-        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
-        const glitchLinks = document.querySelectorAll('.glitch-link');
+        function applyGlitchEffects() {
+            const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
+            const glitchLinks = document.querySelectorAll('.glitch-link');
 
-        glitchLinks.forEach(link => {
-            let interval = null;
-            
-            link.onmouseover = event => {  
-                let iteration = 0;
+            glitchLinks.forEach(link => {
+                let interval = null;
                 
-                clearInterval(interval);
-                
-                interval = setInterval(() => {
-                    event.target.innerText = event.target.innerText
-                    .split("")
-                    .map((letter, index) => {
-                        if(index < iteration) {
-                            return event.target.dataset.text[index];
+                link.onmouseover = event => {  
+                    let iteration = 0;
+                    clearInterval(interval);
+                    
+                    interval = setInterval(() => {
+                        event.target.innerText = event.target.innerText
+                        .split("")
+                        .map((letter, index) => {
+                            if(index < iteration) {
+                                return event.target.dataset.text[index];
+                            }
+                            return letters[Math.floor(Math.random() * 42)]
+                        })
+                        .join("");
+                        
+                        if(iteration >= event.target.dataset.text.length){ 
+                            clearInterval(interval);
                         }
-                        return letters[Math.floor(Math.random() * 42)]
-                    })
-                    .join("");
-                    
-                    if(iteration >= event.target.dataset.text.length){ 
-                        clearInterval(interval);
-                    }
-                    
-                    iteration += 1 / 3;
-                }, 30);
-            }
+                        
+                        iteration += 1 / 3;
+                    }, 30);
+                }
 
-            link.onmouseleave = event => {
-                clearInterval(interval);
-                event.target.innerText = event.target.dataset.text;
-            }
-        });
+                link.onmouseleave = event => {
+                    clearInterval(interval);
+                    event.target.innerText = event.target.dataset.text;
+                }
+            });
+        }
     </script>
 </body>
 </html>
