@@ -27,7 +27,7 @@
             display: flex;
             justify-content: center;
             min-height: 100vh;
-            cursor: crosshair;
+            cursor: url('./cursor.gif'), auto;
             padding: 2rem 1rem;
         }
 
@@ -75,7 +75,7 @@
         .sidebar button {
             display: block; width: 100%; text-align: left; background: none; border: none;
             color: var(--dim-text); font-family: var(--font-main); font-size: 1rem;
-            padding: 0.5rem; margin-bottom: 0.5rem; cursor: pointer; transition: all 0.2s;
+            padding: 0.5rem; margin-bottom: 0.5rem; cursor: url('./cursor2.gif'), pointer; transition: all 0.2s;
         }
         .sidebar button:hover, .sidebar button.active {
             color: var(--bg-color); background-color: var(--text-color); font-weight: bold;
@@ -97,7 +97,7 @@
         p { margin-bottom: 1rem; }
         ul, ol { margin-bottom: 1rem; padding-left: 2rem; }
         li { margin-bottom: 0.4rem; }
-        a { color: inherit; text-decoration: underline; text-decoration-style: dashed; cursor: pointer; }
+        a { color: inherit; text-decoration: underline; text-decoration-style: dashed; cursor: url('./cursor2.gif'), pointer; }
         a:hover { color: #fff; text-shadow: var(--glow); }
         
         code { background: rgba(227, 134, 149, 0.15); padding: 2px 6px; font-family: monospace; font-size: 0.95em; border: 1px solid var(--dim-text); }
@@ -108,7 +108,7 @@
         .warning { color: var(--alert-color); font-weight: bold; }
         
         details { background: rgba(227, 134, 149, 0.05); border: 1px solid var(--dim-text); padding: 0.5rem 1rem; margin-bottom: 1rem; }
-        summary { cursor: pointer; font-weight: bold; margin-bottom: 0.5rem; }
+        summary { cursor: url('./cursor2.gif'), pointer; font-weight: bold; margin-bottom: 0.5rem; }
         details[open] summary { border-bottom: 1px dashed var(--dim-text); padding-bottom: 0.5rem; margin-bottom: 1rem; }
 
         @media (max-width: 768px) {
