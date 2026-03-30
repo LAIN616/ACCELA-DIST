@@ -236,6 +236,7 @@
     </style>
 </head>
 <body class="flicker">
+    <audio id="ambient-bgm" src="./loop.wav" loop></audio>
     <div class="bg-image" id="dynamic-bg"></div>
     <div class="scanlines"></div>
     <div class="vignette"></div>
@@ -363,6 +364,18 @@
 
         // Start boot sequence on load
         window.onload = () => {
+            // --- Audio Handling ---
+            const bgm = document.getElementById('ambient-bgm');
+            bgm.volume = 0.4; // Set to 40% volume so it's not deafening
+            
+            // Attempt to autoplay
+            bgm.play().catch(() => {
+                // If browser blocks autoplay, wait for first click anywhere
+                document.addEventListener('click', () => {
+                    bgm.play();
+                }, { once: true });
+            });
+
             // --- Set Random Background GIF ---
             const backgroundGifs = [
                 './downloading_lain1.gif',
