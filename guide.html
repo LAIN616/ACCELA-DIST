@@ -34,7 +34,7 @@
         /* Background & CRT Effects */
         .bg-image {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: 1; opacity: 0.4; pointer-events: none; /* Increased from 0.15 */
+            z-index: 1; opacity: 0.4; pointer-events: none;
             background-image: url('./main.gif');
             background-position: center; background-repeat: no-repeat; background-size: auto 70vh;
         }
@@ -56,7 +56,7 @@
         #main-interface {
             width: 100%; max-width: 1100px;
             padding: 2rem; border: 1px solid var(--dim-text);
-            background: rgba(10, 0, 5, 0.65); backdrop-filter: blur(3px); /* Adjusted for better GIF visibility */
+            background: rgba(10, 0, 5, 0.65); backdrop-filter: blur(3px);
             box-shadow: inset 0 0 20px rgba(80, 20, 30, 0.5), 0 0 15px rgba(227, 134, 149, 0.1);
             z-index: 10; position: relative;
             display: flex; flex-direction: column;
@@ -82,6 +82,7 @@
         }
         .sidebar .back-link {
             display: inline-block; margin-bottom: 2rem; color: var(--text-color); text-decoration: none; border-bottom: 1px solid var(--text-color);
+            cursor: url('./cursor2.gif'), pointer;
         }
 
         /* Content Area */
@@ -94,6 +95,8 @@
         /* Typography inside Docs */
         h2 { font-size: 1.8rem; margin: 2rem 0 1rem 0; border-bottom: 1px solid var(--dim-text); padding-bottom: 0.3rem; }
         h3 { font-size: 1.3rem; margin: 1.5rem 0 0.5rem 0; color: #ffb8c6; }
+        h4 { font-size: 1.1rem; margin: 1.2rem 0 0.5rem 0; color: var(--text-color); text-decoration: underline; text-decoration-style: dashed;}
+        h5 { font-size: 1rem; margin: 1rem 0 0.3rem 0; color: var(--text-color); }
         p { margin-bottom: 1rem; }
         ul, ol { margin-bottom: 1rem; padding-left: 2rem; }
         li { margin-bottom: 0.4rem; }
@@ -104,11 +107,11 @@
         pre { background: rgba(0,0,0,0.5); padding: 1rem; border: 1px solid var(--dim-text); overflow-x: auto; margin-bottom: 1rem; }
         pre code { background: none; border: none; padding: 0; }
         
-        strong { color: #ffb8c6; }
+        strong { color: #ffb8c6; font-weight: bold; }
         .warning { color: var(--alert-color); font-weight: bold; }
         
         details { background: rgba(227, 134, 149, 0.05); border: 1px solid var(--dim-text); padding: 0.5rem 1rem; margin-bottom: 1rem; }
-        summary { cursor: url('./cursor2.gif'), pointer; font-weight: bold; margin-bottom: 0.5rem; }
+        summary { cursor: url('./cursor2.gif'), pointer; font-weight: bold; margin-bottom: 0.5rem; color: #ffb8c6;}
         details[open] summary { border-bottom: 1px dashed var(--dim-text); padding-bottom: 0.5rem; margin-bottom: 1rem; }
 
         @media (max-width: 768px) {
@@ -133,7 +136,7 @@
 
         <div class="doc-layout">
             <nav class="sidebar">
-                <a href="./index.html?skipBoot=true" class="back-link">< RETURN TO HUB</a>
+                <a href="./index.html?skipBoot=true" class="back-link">&lt; RETURN TO HUB</a>
                 <p style="margin-bottom: 1rem; color: var(--dim-text); font-size: 0.8rem;">INDEX:</p>
                 <button onclick="openTab('main')" id="btn-main" class="active">Quick Start Guide</button>
                 <button onclick="openTab('library')" id="btn-library">Game Library</button>
@@ -271,6 +274,13 @@
                         <li>Use the <strong>Scan Libraries</strong> button at the top if games don't appear</li>
                         <li>This searches all your Steam folders for ACCELA-installed games and checks for updates</li>
                     </ul>
+
+                    <h3>Tips</h3>
+                    <ul>
+                        <li>The bottom of the library window shows the total space used by all your installed games</li>
+                        <li>Uninstall games you no longer play to free up space</li>
+                        <li>Rescan if you install or move games outside of ACCELA</li>
+                    </ul>
                     
                     <p style="margin-top: 2rem; border-top: 1px dashed var(--dim-text); padding-top: 1rem;">
                         <a href="#" onclick="openTab('main'); return false;">&lt; Return to Quick Start Guide</a>
@@ -295,7 +305,11 @@
                         <li>Paste it in the API Key field in Settings (Gear Icon)</li>
                         <li>Click OK to save</li>
                     </ol>
-                    <p><strong>Why you need it:</strong> Required for searching and downloading games from the Morrenus database. Without it, you can only use drag & drop with your own manifest ZIP files.</p>
+                    <p><strong>Why you need it:</strong></p>
+                    <ul>
+                        <li>Required for searching and downloading games from the Morrenus database</li>
+                        <li>Without it, you can only use drag & drop with your own manifest ZIP files</li>
+                    </ul>
 
                     <h4>SLSsteam Mode</h4>
                     <ul>
@@ -334,7 +348,18 @@
                         <li>Once logged in, SLScheevo will save your credentials</li>
                         <li>Close SLScheevo when done</li>
                     </ol>
-                    <p>After setup, achievement generation will work automatically after downloads. No need to run SLScheevo again unless you change Steam accounts.</p>
+                    <h4>After Setup:</h4>
+                    <ul>
+                        <li>Achievement generation will work automatically after downloads</li>
+                        <li>No need to run SLScheevo again unless you change Steam accounts or change account login details</li>
+                    </ul>
+
+                    <h3>Saving Settings</h3>
+                    <ul>
+                        <li>Click <strong>OK</strong> to save your changes</li>
+                        <li>Click <strong>Cancel</strong> to keep your old settings</li>
+                        <li>Some settings only affect new downloads (not existing ones)</li>
+                    </ul>
                     
                     <p style="margin-top: 2rem; border-top: 1px dashed var(--dim-text); padding-top: 1rem;">
                         <a href="#" onclick="openTab('main'); return false;">&lt; Return to Quick Start Guide</a>
@@ -369,6 +394,13 @@
                         <li><strong>Enable/Disable</strong> - Check boxes for sounds you want to hear</li>
                         <li><strong>Click OK</strong> - To save your settings</li>
                     </ol>
+
+                    <h3>Tips</h3>
+                    <ul>
+                        <li>Lower the hum volume if you find background noise distracting</li>
+                        <li>Use the test buttons to preview before saving</li>
+                        <li>Changes don't save until you click OK</li>
+                    </ul>
                     
                     <p style="margin-top: 2rem; border-top: 1px dashed var(--dim-text); padding-top: 1rem;">
                         <a href="#" onclick="openTab('main'); return false;">&lt; Return to Quick Start Guide</a>
@@ -412,9 +444,22 @@
                     <ol>
                         <li>Adjust your desired colors, fonts, and display preferences within the Style tab.</li>
                         <li>Click <strong>OK</strong> at the bottom of the Settings window to apply your changes to the entire app.</li>
-                        <li><em>Note:</em> If your chosen background and accent colors are too similar and you haven't checked "Ignore color warnings," the app will warn you and prevent saving.</li>
+                        <li><em>Note:</em> If your chosen background and accent colors are too similar and you haven't checked "Ignore color warnings," the app will warn you and prevent saving to ensure the interface remains usable.</li>
                     </ol>
-                    <p><strong>What Doesn't Change Instantly:</strong> GIFs take around 2-7s to recolor based on your preferences and then get cached. Do not think your application has crashed; it is just recoloring the GIFs in the background.</p>
+                    
+                    <h4>What Changes Instantly:</h4>
+                    <ul>
+                        <li>Buttons and icons</li>
+                        <li>Progress bars</li>
+                        <li>Text labels and highlights</li>
+                        <li>Title bar elements</li>
+                        <li>Moving the titlebar to the top or toggling the GIF display</li>
+                    </ul>
+
+                    <h4>What Doesn't Change Instantly:</h4>
+                    <ul>
+                        <li>GIFs take around 2-7s to recolor based on your preferences and then get cached. Do not think your application has crashed; it is just recoloring the GIFs in the background.</li>
+                    </ul>
 
                     <p style="margin-top: 2rem; border-top: 1px dashed var(--dim-text); padding-top: 1rem;">
                         <a href="#" onclick="openTab('main'); return false;">&lt; Return to Quick Start Guide</a>
@@ -424,7 +469,8 @@
                 <!-- SLSSTEAM GUIDE -->
                 <div id="slssteam" class="tab-content">
                     <h2>SLSsteam Setup Guide (Linux)</h2>
-                    <p><strong>What is SLSsteam?</strong> SLSsteam is a shared object (.so) preload that adds various enhancements to your Steam client, providing advanced functionality for games not officially owned.</p>
+                    <h3>🔧 What is SLSsteam?</h3>
+                    <p>SLSsteam is a shared object (.so) preload that adds various enhancements to your Steam client, providing advanced functionality for games not officially owned.</p>
 
                     <h3>Features</h3>
                     <ul>
@@ -434,21 +480,69 @@
                         <li><strong>Play games you don't own</strong> (via manifest or manual method)</li>
                     </ul>
 
+                    <h3>Extra Features for Non-Owned Games</h3>
+                    <p>SLSsteam makes pirated/manual games behave more like real Steam purchases:</p>
+                    <ul>
+                        <li><strong>Dev-Made Controller Layouts</strong> - Use official controller configurations even for games you don't own — great for Steam Deck and Big Picture mode</li>
+                        <li><strong>Steam Workshop Support</strong> - Access Steam Workshop mods for supported games without needing to own them</li>
+                        <li><strong>Bypass Mod Launcher Ownership Checks</strong> - Use tools like Vortex, r2modman, 7th Heaven and Thunderstore even if the game isn't in your library</li>
+                        <li><strong>Proper Save File Location</strong> - Save files are stored in the correct Steam directory, so if you buy the game later, your saves carry over seamlessly</li>
+                    </ul>
+
                     <h3>Prerequisites (Steam Deck / Immutable Systems)</h3>
                     <p>If you are on Steam Deck or have an immutable file system (like Bazzite), follow these steps before installing:</p>
-                    <ol>
-                        <li>Set a sudo password: <code>sudo passwd</code></li>
-                        <li>Make the filesystem writable (Steam Deck): <code>sudo steamos-readonly disable</code></li>
-                        <li>Have a text editor installed and set your file browser to show hidden files.</li>
-                    </ol>
+                    
+                    <h4>1. Set a sudo password:</h4>
+                    <pre><code>sudo passwd</code></pre>
+                    <p>If you've never done this, you won't be able to run sudo commands.</p>
+
+                    <h4>2. Make the filesystem writable:</h4>
+                    <p><strong>Steam Deck:</strong></p>
+                    <pre><code>sudo steamos-readonly disable</code></pre>
+
+                    <h4>3. Install necessary tools:</h4>
+                    <ul>
+                        <li>Have a text editor installed (nano, vim, kate, etc.)</li>
+                        <li>Set your file browser to show hidden files</li>
+                    </ul>
 
                     <h3>Installation</h3>
+                    
+                    <h4>Step 1: Download & Extract</h4>
+                    <p>Grab the latest release from the GitHub repo: <a href="https://github.com/AceSLS/SLSsteam" target="_blank">https://github.com/AceSLS/SLSsteam</a></p>
+
+                    <h4>Step 2: Run Setup Script</h4>
+                    <p>Wherever you extracted the files, open a terminal in that directory and run:</p>
+                    <pre><code>./setup.sh install</code></pre>
+
+                    <h4>Step 3: Configure SLSsteam</h4>
+                    <p>Navigate to <code>~/.config/SLSsteam/</code> (or <code>/home/deck/.config/SLSsteam/</code> for Steam Deck) and open the config file using your text editor.</p>
+                    <p><strong>Key configuration to enable:</strong></p>
+                    <pre><code>playNotOwnedGames = Yes</code></pre>
+                    <p>This setting allows you to play games downloaded by ACCELA as if you owned them.</p>
+
+                    <h4>Step 4: Enable in ACCELA</h4>
                     <ol>
-                        <li><strong>Download & Extract:</strong> Grab the latest release from the <a href="https://github.com/AceSLS/SLSsteam" target="_blank">GitHub repo</a>.</li>
-                        <li><strong>Run Setup Script:</strong> Open a terminal in that directory and run: <code>./setup.sh install</code></li>
-                        <li><strong>Configure SLSsteam:</strong> Navigate to <code>~/.config/SLSsteam/</code> and open the config file. Enable: <code>playNotOwnedGames = Yes</code></li>
-                        <li><strong>Enable in ACCELA:</strong> Go to Settings > Steam tab. Enable <strong>SLSsteam Config Management</strong> and <strong>Prompt Steam Restart</strong>.</li>
-                        <li><strong>Set Proton Compatibility:</strong> Right click the game in Steam > Properties > Compatibility > Force the use of a specific Steam Play compatibility tool.</li>
+                        <li>Open ACCELA Settings (Gear Icon)</li>
+                        <li>Open <strong>Downloads</strong> tab</li>
+                        <li>Enable "Limit Downloads to Steam Libraries"</li>
+                        <li>Open <strong>Steam</strong> tab</li>
+                        <li>Enable <strong>SLSsteam Config Management</strong></li>
+                        <li>Enable <strong>Prompt Steam Restart</strong></li>
+                        <li>Click <strong>OK</strong> to save</li>
+                    </ol>
+
+                    <h4>Step 5: Restart Steam</h4>
+                    <p>When prompted by ACCELA, choose to restart Steam. Your games should now appear in your Steam library as if you owned them.</p>
+
+                    <h4>Step 6: Set Proton Compatibility</h4>
+                    <p>For each game in Steam:</p>
+                    <ol>
+                        <li>Right-click the game</li>
+                        <li>Go to <strong>Properties &rarr; Compatibility</strong></li>
+                        <li>Check "Force the use of a specific Steam Play compatibility tool"</li>
+                        <li>Select your preferred Proton version</li>
+                        <li>Enjoy!</li>
                     </ol>
 
                     <h3>Steam Deck Game Mode Instructions</h3>
@@ -457,17 +551,79 @@
                     <h4>Method 1: Permanent Modification</h4>
                     <ol>
                         <li>Navigate to: <code>/usr/bin</code></li>
-                        <li>Find the <code>steam-jupiter</code> script and <strong>make a backup</strong>!</li>
-                        <li>Edit the script and change:<br>
-                            <code>exec /usr/lib/steam/steam -steamdeck "$@"</code><br>
+                        <li>Find the <code>steam-jupiter</code> script and <strong>make a backup</strong> of this file somewhere safe!</li>
+                        <li>Edit the <code>steam-jupiter</code> script found in <code>/usr/bin</code></li>
+                        <li>Change:<br>
+                            <pre><code>exec /usr/lib/steam/steam -steamdeck "$@"</code></pre>
                             To:<br>
-                            <code>exec env LD_AUDIT="/home/deck/.local/share/SLSsteam/library-inject.so:/home/deck/.local/share/SLSsteam/SLSsteam.so" -steamdeck "$@"</code>
+                            <pre><code>exec env LD_AUDIT="/home/deck/.local/share/SLSsteam/library-inject.so:/home/deck/.local/share/SLSsteam/SLSsteam.so" -steamdeck "$@"</code></pre>
                         </li>
+                        <li>Save changes</li>
                     </ol>
+                    <p>Games will be unlocked now regardless of desktop or gamemode.</p>
 
                     <h4>Method 2: Temporary (Safer)</h4>
                     <p>Run this command before starting Steam in Game Mode:</p>
-                    <code>env LD_AUDIT="/home/deck/.local/share/SLSsteam/library-inject.so:/home/deck/.local/share/SLSsteam/SLSsteam.so" steam</code>
+                    <pre><code>env LD_AUDIT="/home/deck/.local/share/SLSsteam/library-inject.so:/home/deck/.local/share/SLSsteam/SLSsteam.so" steam</code></pre>
+
+                    <h3>Troubleshooting</h3>
+
+                    <h4>"Application load error 6:0000065432"</h4>
+                    <p>This error indicates SteamStub DRM is still present. You need to:</p>
+                    <ol>
+                        <li><strong>Enable DRM removal in ACCELA Settings</strong></li>
+                        <li>Make sure <strong>Steam DRM Removal</strong> is checked in ACCELA before downloading games</li>
+                        <li>ACCELA will automatically run Steamless on the game executables</li>
+                    </ol>
+
+                    <h4>Games not appearing in Steam library</h4>
+                    <ul>
+                        <li>Verify <code>playNotOwnedGames = Yes</code> is set in SLSsteam config</li>
+                        <li>Restart Steam completely after enabling SLSsteam mode</li>
+                        <li>Check that SLSsteam is properly loaded (check system logs)</li>
+                        <li>Ensure you enabled SLSsteam Mode in ACCELA settings</li>
+                    </ul>
+
+                    <h4>SLSsteam not loading</h4>
+                    <ul>
+                        <li>Verify the installation completed successfully</li>
+                        <li>Check that <code>~/.local/share/SLSsteam.so</code> exists</li>
+                        <li>Make sure your system meets the prerequisites</li>
+                        <li>On immutable systems, ensure you made the filesystem writable</li>
+                    </ul>
+
+                    <h4>Permission errors</h4>
+                    <ul>
+                        <li>Run setup scripts with <code>sudo</code> if necessary</li>
+                        <li>Ensure you have write permissions to the Steam directory</li>
+                        <li>Check that SLSsteam files have correct ownership and permissions</li>
+                    </ul>
+
+                    <h3>Updating SLSsteam</h3>
+                    <p>To update SLSsteam:</p>
+                    <ol>
+                        <li>Download the latest release from GitHub</li>
+                        <li>Extract to a new directory</li>
+                        <li>Run: <code>./setup.sh install</code></li>
+                        <li>Restart Steam</li>
+                    </ol>
+
+                    <h3>Uninstallation</h3>
+                    <p>To remove SLSsteam:</p>
+                    <ol>
+                        <li>Run: <code>./setup.sh uninstall</code> (from the SLSsteam directory)</li>
+                        <li>Remove the SLSsteam config directory: <code>rm -rf ~/.config/SLSsteam/</code></li>
+                        <li>Restore original <code>steam-jupiter</code> script if modified</li>
+                        <li>Restart Steam</li>
+                    </ol>
+
+                    <h3>Additional Notes</h3>
+                    <ul>
+                        <li>SLSsteam works with both native Linux games and Windows games via Proton</li>
+                        <li>Some online features may still require legitimate ownership</li>
+                        <li>Always backup your system before making significant modifications</li>
+                        <li>Regular Steam updates may require SLSsteam updates for compatibility</li>
+                    </ul>
 
                     <p style="margin-top: 2rem; border-top: 1px dashed var(--dim-text); padding-top: 1rem;">
                         <a href="#" onclick="openTab('main'); return false;">&lt; Return to Quick Start Guide</a> | <a href="#" onclick="openTab('settings'); return false;">Settings Guide</a>
@@ -485,30 +641,189 @@
                     
                     <details>
                         <summary>Important Disclaimer</summary>
-                        <p>This guide involves modifying system settings and using third-party software. Proceed at your own risk. It is highly recommended to backup your system and only download GreenLuma from trusted sources.</p>
+                        <p>This guide involves modifying system settings and using third-party software. While efforts have been made to provide clear instructions, proceed at your own risk.</p>
+                        <p><strong>It is highly recommended to:</strong></p>
+                        <ul>
+                            <li>Backup your system or create a restore point before proceeding</li>
+                            <li>Only download GreenLuma from trusted sources</li>
+                        </ul>
                     </details>
 
                     <details open>
                         <summary>Part 1: Initial GreenLuma Setup</summary>
                         <h4>Step 1: Download GreenLuma</h4>
-                        <p>Navigate to the <a href="https://cs.rin.ru/forum/viewtopic.php?f=29&t=103709" target="_blank">official GreenLuma thread</a> and download the latest version.</p>
+                        <ol>
+                            <li><a href="https://cs.rin.ru/forum/viewtopic.php?f=29&t=103709" target="_blank">Navigate to the official GreenLuma thread</a></li>
+                            <li>Download the latest version of GreenLuma</li>
+                            <li><strong>Note:</strong> Your browser or antivirus software might flag the download. This is common for tools that interact with other applications. Proceed only if you trust the source.</li>
+                        </ol>
 
                         <h4>Step 2: Extract Files to Your Steam Folder</h4>
-                        <p>Locate your main Steam installation folder (e.g., <code>C:\Program Files (x86)\Steam</code>). Extract the GreenLuma files directly into this main folder. Extract <code>x64launcher.exe</code> into the <code>bin</code> folder inside your Steam directory.</p>
+                        <ol>
+                            <li>Locate your main Steam installation folder (typically):
+                                <ul>
+                                    <li><code>C:\Program Files (x86)\Steam</code></li>
+                                    <li><code>C:\Program Files\Steam</code></li>
+                                </ul>
+                            </li>
+                            <li>From the downloaded GreenLuma archive, extract these files <strong>directly into your main Steam folder</strong>:
+                                <ul>
+                                    <li><code>GreenLuma2026_Files</code> (folder)</li>
+                                    <li><code>GreenLuma_2026_x86.dll</code></li>
+                                    <li><code>GreenLuma_2026_x64.dll</code></li>
+                                    <li><code>GreenLumaSettings_2026.exe</code></li>
+                                    <li><code>DLLInjector.exe</code></li>
+                                    <li><code>DLLInjector.ini</code></li>
+                                </ul>
+                            </li>
+                            <li>Extract <code>x64launcher.exe</code> into the <code>bin</code> folder inside your Steam directory:
+                                <ul>
+                                    <li><code>C:\Program Files (x86)\Steam\bin\</code></li>
+                                </ul>
+                            </li>
+                        </ol>
 
                         <h4>Step 3: Create the "AppList" Folder</h4>
-                        <p>In your main Steam directory, create a new folder named <code>AppList</code>.</p>
+                        <ul>
+                            <li>In your main Steam directory, create a new folder named <code>AppList</code></li>
+                            <li>This folder will be used by GreenLuma to manage game manifests</li>
+                        </ul>
 
-                        <h4>Step 4: Configure Settings</h4>
-                        <p>Run <code>GreenLumaSettings_2026.exe</code> as administrator. Enable <strong>No Question Mode</strong> and <strong>Stealth Mode</strong>, then save.</p>
+                        <h4>Step 4: Configure GreenLuma Settings</h4>
+                        <ol>
+                            <li>Run <code>GreenLumaSettings_2026.exe</code> as an administrator (Right-click &rarr; Run as administrator)</li>
+                            <li>Inside the GreenLuma settings application, enable the following options:
+                                <ul>
+                                    <li><strong>No Question Mode</strong></li>
+                                    <li><strong>Stealth Mode</strong></li>
+                                </ul>
+                            </li>
+                            <li>Save your settings and close the application</li>
+                        </ol>
 
                         <h4>Step 5: NoQuestion.bin and StealthMode.bin</h4>
-                        <p>Either create new .txt files named NoQuestion and StealthMode and change file extention to .bin in your steam directory, or use the supplied files. Make sure to make these files READ-ONLY!</p>
+                        <ul>
+                            <li>Either create new .txt files named NoQuestion and StealthMode and change file extention to .bin in your steam directory</li>
+                            <li>OR use the supplied files.</li>
+                            <li>make sure to make these files READ-ONLY!</li>
+                        </ul>
+                        <p>These files will force Greenluma to use No Question Mode and StealthMode.</p>
                     </details>
 
                     <details>
                         <summary>Part 2: Running Games with GreenLuma (Manual Start)</summary>
-                        <p class="warning">Important: Whenever you wish to run games under GreenLuma's influence, you must start Steam by launching <code>DLLInjector.exe</code> from your main Steam folder. Do NOT launch Steam directly from its usual shortcut or Steam.exe.</p>
+                        <p class="warning">Important: Whenever you wish to run games under GreenLuma's influence, you must start Steam by launching <code>DLLInjector.exe</code> from your main Steam folder.</p>
+                        <p><strong>Do NOT</strong> launch Steam directly from its usual shortcut or <code>Steam.exe</code>.</p>
+                    </details>
+
+                    <details>
+                        <summary>Part 3: Persistent GreenLuma Activation</summary>
+                        <p><strong>Upon first boot of GreenLuma No Question Mode is ignored. When asked how many appids to unlock type 1 and hit enter. When asked what appid type 480 and hit enter. This will need to be done after each update of GreenLuma</strong></p>
+                        <p>You can use the following method to ensure GreenLuma activates automatically every time your PC starts.</p>
+
+                        <h4>Using Task Scheduler (Recommended for most users)</h4>
+
+                        <h5>Step 1: Disable Steam's Auto-Start</h5>
+                        <ol>
+                            <li>Open Steam</li>
+                            <li>Go to <strong>Steam &rarr; Settings</strong></li>
+                            <li>Navigate to the <strong>Interface</strong> tab</li>
+                            <li>Uncheck the option <strong>"Run Steam when my computer starts"</strong></li>
+                            <li>Click <strong>OK</strong> to save changes</li>
+                        </ol>
+
+                        <h5>Step 2: Open Task Scheduler</h5>
+                        <ul>
+                            <li>Press <code>Windows Key + R</code> to open the Run dialog</li>
+                            <li>Type <code>taskschd.msc</code> and press Enter</li>
+                            <li>Or search for "Task Scheduler" in the Windows Start Menu</li>
+                        </ul>
+
+                        <h5>Step 3: Create a Basic Task</h5>
+                        <ol>
+                            <li>In the Task Scheduler window, in the right-hand "Actions" pane, click on <strong>"Create Basic Task..."</strong></li>
+                            <li><strong>Task Name and Description:</strong>
+                                <ul>
+                                    <li>Name: <code>GreenLuma Startup</code> (or any descriptive name)</li>
+                                    <li>Description: <code>Starts Steam with GreenLuma via DLLInjector.exe at system startup</code></li>
+                                    <li>Click <strong>Next</strong></li>
+                                </ul>
+                            </li>
+                            <li><strong>Trigger:</strong>
+                                <ul>
+                                    <li>Select <strong>When I Log On</strong></li>
+                                    <li>Click <strong>Next</strong></li>
+                                </ul>
+                            </li>
+                            <li><strong>Action:</strong>
+                                <ul>
+                                    <li>Select <strong>Start a program</strong></li>
+                                    <li>Click <strong>Next</strong></li>
+                                </ul>
+                            </li>
+                            <li><strong>Program/script:</strong>
+                                <ul>
+                                    <li>Click <strong>Browse...</strong> and navigate to your Steam folder</li>
+                                    <li>Select <code>DLLInjector.exe</code></li>
+                                    <li>Click <strong>Open</strong></li>
+                                    <li>Click <strong>Next</strong></li>
+                                </ul>
+                            </li>
+                            <li><strong>Finish:</strong>
+                                <ul>
+                                    <li>Review your settings</li>
+                                    <li>Check the box <strong>"Open the Properties dialog for this task when I click Finish"</strong></li>
+                                    <li>Click <strong>Finish</strong></li>
+                                </ul>
+                            </li>
+                        </ol>
+
+                        <h5>Step 4: Configure Task Properties (Important)</h5>
+                        <ol>
+                            <li>In the Properties window that opens, on the <strong>General</strong> tab:</li>
+                            <li>Under <strong>"Security options"</strong>, click the <strong>Change User or Group...</strong> button</li>
+                            <li>Type <code>SYSTEM</code> in the "Enter the object name to select" field and click <strong>Check Names</strong></li>
+                            <li>Click <strong>OK</strong></li>
+                            <li>Ensure <strong>Run with highest privileges</strong> is checked</li>
+                            <li>Under <strong>"Configure for:"</strong>, select your Windows version (e.g., Windows 10)</li>
+                            <li>Under <strong>"Security options"</strong>, select <strong>Run whether user is logged on or not</strong></li>
+                            <li>Click <strong>OK</strong> (You might be prompted for your administrator password)</li>
+                        </ol>
+                    </details>
+
+                    <details>
+                        <summary>Important Considerations and Troubleshooting</summary>
+                        
+                        <h4>Antivirus Software</h4>
+                        <p>Your antivirus program might interfere with GreenLuma. To prevent this:</p>
+                        <ul>
+                            <li>Add an exception for your entire Steam installation folder in your antivirus settings</li>
+                            <li>This ensures that <code>DLLInjector.exe</code>, <code>GreenLuma_2026_x64.dll</code>, and other related files are not quarantined or blocked</li>
+                        </ul>
+
+                        <h4>Administrator Privileges</h4>
+                        <ul>
+                            <li>Ensure you run <code>GreenLumaSettings_2026.exe</code> and <code>DLLInjector.exe</code> with administrator privileges</li>
+                            <li>The Task Scheduler method should run with highest privileges</li>
+                        </ul>
+
+                        <h4>System Restore Point</h4>
+                        <p>Before making significant system changes, consider creating a Windows System Restore Point. This allows you to revert your system to a previous state if something goes wrong.</p>
+
+                        <h4>Games Not Appearing in Library</h4>
+                        <ul>
+                            <li>Make sure GreenLuma Mode is enabled in ACCELA Settings</li>
+                            <li>Verify you're launching Steam via <code>DLLInjector.exe</code>, not the normal shortcut</li>
+                            <li>Check that the <code>AppList</code> folder exists in your Steam directory</li>
+                            <li>Restart Steam completely after enabling GreenLuma mode</li>
+                        </ul>
+
+                        <h4>"Application load error 6:0000065432"</h4>
+                        <ul>
+                            <li>Enable DRM removal in ACCELA Settings before downloading games</li>
+                            <li>This error occurs when SteamStub DRM is present on games you don't own</li>
+                            <li>ACCELA will automatically run Steamless on game executables when DRM removal is enabled</li>
+                        </ul>
                     </details>
 
                     <details>
@@ -520,7 +835,26 @@
                             <li>Enable both <strong>GreenLuma Wrapper Mode</strong> and <strong>GreenLuma Config Management</strong></li>
                             <li>Click <strong>OK</strong> to save</li>
                         </ol>
+                        
+                        <h4>Downloading Games:</h4>
+                        <ol>
+                            <li>After enabling GreenLuma Wrapper Mode, download games through ACCELA as normal</li>
+                            <li>Games will automatically appear in your Steam library</li>
+                            <li>Launch games through Steam (using GreenLuma-injected Steam client)</li>
+                        </ol>
+
                         <p class="warning">IMPORTANT NOTE: YOU CAN ONLY UNLOCK 134 APPIDS AT A TIME, DLC ARE INCLUDED IN THAT COUNT. BE MINDFUL OF HOW MUCH YOU UNLOCK</p>
+                    </details>
+
+                    <details>
+                        <summary>Uninstallation</summary>
+                        <p>To remove GreenLuma:</p>
+                        <ol>
+                            <li>Delete all GreenLuma files from your Steam folder</li>
+                            <li>Remove the Task Scheduler task</li>
+                            <li>Restart your computer</li>
+                            <li>Launch Steam normally</li>
+                        </ol>
                     </details>
                     
                     <p style="margin-top: 2rem; border-top: 1px dashed var(--dim-text); padding-top: 1rem;">
@@ -570,13 +904,33 @@
 
                     <h4>Games don't appear in library</h4>
                     <ul>
-                        <li><strong>IMPORTANT:</strong> Only shows games installed through ACCELA</li>
-                        <li>Internally this is handled by locating a <code>.DepotDownloader</code> folder inside your game folder. If you want ACCELA to handle a game not downloaded through ACCELA, create this folder.</li>
+                        <li><strong>IMPORTANT:</strong> Only shows games installed through ACCELA
+                            <ul>
+                                <li>Internally this is handled by locating a <code>.DepotDownloader</code> folder inside your game folder</li>
+                                <li>If you want ACCELA to handle a game not downloaded through ACCELA, create this folder</li>
+                            </ul>
+                        </li>
                         <li>Click "Scan Steam Libraries" to refresh</li>
+                        <li>Make sure games you installed were actually installed successfully</li>
                     </ul>
 
                     <h4>Can't change colors</h4>
                     <p>Some color combinations are blocked for readability. Due to this fact and the fact that it is hard to account for all color combinations, we've had to set some limits to the color pickers.</p>
+
+                    <h3>Getting Help</h3>
+                    <p>If you encounter problems not covered here:</p>
+                    <ul>
+                        <li>Make an issue for help regarding your platform or setup</li>
+                        <li>Describe what you were doing when the problem occurred</li>
+                        <li>Include any error messages you see</li>
+                    </ul>
+
+                    <h3>Tips</h3>
+                    <ul>
+                        <li>Check the log area at the bottom for detailed information</li>
+                        <li>Restart the app if something seems wrong</li>
+                        <li>Make sure you have enough disk space for large games</li>
+                    </ul>
 
                     <p style="margin-top: 2rem; border-top: 1px dashed var(--dim-text); padding-top: 1rem;">
                         <a href="#" onclick="openTab('main'); return false;">&lt; Return to Quick Start Guide</a>
