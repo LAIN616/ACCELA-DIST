@@ -367,15 +367,15 @@
         window.onload = () => {
             // --- Set Random Background GIF ---
             const backgroundGifs = [
-                'downloading_lain1.gif',
-                'downloading_lain2.gif',
-                'downloading_lain3.gif',
-                'downloading_lain4.gif',
-                'downloading_lain5.gif',
-                'downloading_lain6.gif',
-                'downloading_lain7.gif',
-                'downloading_lain11.gif',
-                'main.gif'
+                './downloading_lain1.gif',
+                './downloading_lain2.gif',
+                './downloading_lain3.gif',
+                './downloading_lain4.gif',
+                './downloading_lain5.gif',
+                './downloading_lain6.gif',
+                './downloading_lain7.gif',
+                './downloading_lain11.gif',
+                './main.gif'
             ];
             const randomGif = backgroundGifs[Math.floor(Math.random() * backgroundGifs.length)];
             document.getElementById('dynamic-bg').style.backgroundImage = `url('${randomGif}')`;
