@@ -396,7 +396,14 @@
             const randomGif = backgroundGifs[Math.floor(Math.random() * backgroundGifs.length)];
             document.getElementById('dynamic-bg').style.backgroundImage = `url('${randomGif}')`;
 
-            typeLine();
+            // --- Check for Skip Boot Parameter ---
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('skipBoot') === 'true') {
+                document.getElementById('boot-screen').style.display = 'none';
+                document.getElementById('main-interface').style.display = 'block';
+            } else {
+                typeLine();
+            }
         };
 
         // --- Glitch Text Logic ---
