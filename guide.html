@@ -156,14 +156,14 @@
                     
                     <h3>First Steps</h3>
                     <h4>Steam Integration (Skip if you don't want this)</h4>
-                    <p><strong>Add games directly to your Steam library</strong> using <a onclick="openTab('slssteam')">SLSsteam (Linux)</a> or <a onclick="openTab('greenluma')">GreenLuma (Windows)</a> integration for full Steam functionality with downloaded games.</p>
+                    <p><strong>Add games directly to your Steam library</strong> using <a href="#" onclick="openTab('slssteam'); return false;">SLSsteam (Linux)</a> or <a href="#" onclick="openTab('greenluma'); return false;">GreenLuma (Windows)</a> integration for full Steam functionality with downloaded games.</p>
                     
                     <h4>Getting Your API Key (Required for Search)</h4>
                     <p>Before you can search for games, you need to get an API key:</p>
                     <ol>
-                        <li>Go to <code>https://manifest.morrenus.xyz/</code></li>
+                        <li>Go to <a href="https://manifest.morrenus.xyz/" target="_blank">https://manifest.morrenus.xyz/</a></li>
                         <li>Log in with Discord (you must be in the Morrenus Discord server)</li>
-                        <li>After logging in, go to <code>https://manifest.morrenus.xyz/api-keys/user</code></li>
+                        <li>After logging in, go to <a href="https://manifest.morrenus.xyz/api-keys/user" target="_blank">https://manifest.morrenus.xyz/api-keys/user</a></li>
                         <li>Create a new API Key (also make a New Request to make sure your keys last longer so that you don't need to regenerate them later)</li>
                         <li>Copy your API key</li>
                         <li>Open ACCELA Settings (Gear icon), go to the <strong>Integrations</strong> tab, and paste your key in the "Morrenus API Key" field.</li>
@@ -201,7 +201,19 @@
                     </ul>
 
                     <h3>Need Help?</h3>
-                    <p>Check the detailed guides below for specific features, or look at the <a onclick="openTab('faq')">FAQ</a> for common issues.</p>
+                    <ul>
+                        <li>Check the detailed guides below for specific features</li>
+                        <li>Look at the <a href="#" onclick="openTab('faq'); return false;">FAQ & Troubleshooting</a> for common issues</li>
+                    </ul>
+
+                    <h3>Detailed Guides</h3>
+                    <ul>
+                        <li><a href="#" onclick="openTab('audio'); return false;">Audio Settings Guide</a> - Control sounds and volume</li>
+                        <li><a href="#" onclick="openTab('style'); return false;">Style Customization Guide</a> - Change colors and appearance</li>
+                        <li><a href="#" onclick="openTab('library'); return false;">Game Library Guide</a> - Manage your installed games</li>
+                        <li><a href="#" onclick="openTab('settings'); return false;">Settings Guide</a> - Configure advanced options</li>
+                        <li><a href="#" onclick="openTab('faq'); return false;">FAQ & Troubleshooting</a> - Solutions to common problems</li>
+                    </ul>
                 </div>
 
                 <!-- GAME LIBRARY GUIDE -->
@@ -258,6 +270,10 @@
                         <li>Use the <strong>Scan Libraries</strong> button at the top if games don't appear</li>
                         <li>This searches all your Steam folders for ACCELA-installed games and checks for updates</li>
                     </ul>
+                    
+                    <p style="margin-top: 2rem; border-top: 1px dashed var(--dim-text); padding-top: 1rem;">
+                        <a href="#" onclick="openTab('main'); return false;">&lt; Return to Quick Start Guide</a>
+                    </p>
                 </div>
 
                 <!-- SETTINGS GUIDE -->
@@ -271,9 +287,9 @@
                     <h4>Morrenus API Key (Required for Search)</h4>
                     <p><strong>How to get your API key:</strong></p>
                     <ol>
-                        <li>Visit <code>https://manifest.morrenus.xyz/</code></li>
+                        <li>Visit <a href="https://manifest.morrenus.xyz/" target="_blank">https://manifest.morrenus.xyz/</a></li>
                         <li>Log in with Discord (must be in Morrenus Discord server)</li>
-                        <li>Go to <code>https://manifest.morrenus.xyz/api-keys/user</code></li>
+                        <li>Go to <a href="https://manifest.morrenus.xyz/api-keys/user" target="_blank">https://manifest.morrenus.xyz/api-keys/user</a></li>
                         <li>Create a new API Key and copy it</li>
                         <li>Paste it in the API Key field in Settings (Gear Icon)</li>
                         <li>Click OK to save</li>
@@ -302,6 +318,13 @@
                         <li><strong>Tool used:</strong> Steamless (automatically runs after download)</li>
                     </ul>
 
+                    <h3>Steam Integration Setup</h3>
+                    <p>For detailed installation instructions for Steam integration tools:</p>
+                    <ul>
+                        <li><a href="#" onclick="openTab('slssteam'); return false;">Linux: SLSsteam</a> - Complete setup guide for Linux systems</li>
+                        <li><a href="#" onclick="openTab('greenluma'); return false;">Windows: GreenLuma</a> - Complete setup guide for Windows systems</li>
+                    </ul>
+
                     <h3>SLScheevo Setup (Required for Achievements)</h3>
                     <h4>First-Time Setup:</h4>
                     <ol>
@@ -311,6 +334,10 @@
                         <li>Close SLScheevo when done</li>
                     </ol>
                     <p>After setup, achievement generation will work automatically after downloads. No need to run SLScheevo again unless you change Steam accounts.</p>
+                    
+                    <p style="margin-top: 2rem; border-top: 1px dashed var(--dim-text); padding-top: 1rem;">
+                        <a href="#" onclick="openTab('main'); return false;">&lt; Return to Quick Start Guide</a>
+                    </p>
                 </div>
 
                 <!-- AUDIO GUIDE -->
@@ -341,6 +368,10 @@
                         <li><strong>Enable/Disable</strong> - Check boxes for sounds you want to hear</li>
                         <li><strong>Click OK</strong> - To save your settings</li>
                     </ol>
+                    
+                    <p style="margin-top: 2rem; border-top: 1px dashed var(--dim-text); padding-top: 1rem;">
+                        <a href="#" onclick="openTab('main'); return false;">&lt; Return to Quick Start Guide</a>
+                    </p>
                 </div>
 
                 <!-- STYLE GUIDE -->
@@ -383,6 +414,10 @@
                         <li><em>Note:</em> If your chosen background and accent colors are too similar and you haven't checked "Ignore color warnings," the app will warn you and prevent saving.</li>
                     </ol>
                     <p><strong>What Doesn't Change Instantly:</strong> GIFs take around 2-7s to recolor based on your preferences and then get cached. Do not think your application has crashed; it is just recoloring the GIFs in the background.</p>
+
+                    <p style="margin-top: 2rem; border-top: 1px dashed var(--dim-text); padding-top: 1rem;">
+                        <a href="#" onclick="openTab('main'); return false;">&lt; Return to Quick Start Guide</a>
+                    </p>
                 </div>
 
                 <!-- SLSSTEAM GUIDE -->
@@ -432,6 +467,10 @@
                     <h4>Method 2: Temporary (Safer)</h4>
                     <p>Run this command before starting Steam in Game Mode:</p>
                     <code>env LD_AUDIT="/home/deck/.local/share/SLSsteam/library-inject.so:/home/deck/.local/share/SLSsteam/SLSsteam.so" steam</code>
+
+                    <p style="margin-top: 2rem; border-top: 1px dashed var(--dim-text); padding-top: 1rem;">
+                        <a href="#" onclick="openTab('main'); return false;">&lt; Return to Quick Start Guide</a> | <a href="#" onclick="openTab('settings'); return false;">Settings Guide</a>
+                    </p>
                 </div>
 
                 <!-- GREENLUMA GUIDE -->
@@ -482,6 +521,10 @@
                         </ol>
                         <p class="warning">IMPORTANT NOTE: YOU CAN ONLY UNLOCK 134 APPIDS AT A TIME, DLC ARE INCLUDED IN THAT COUNT. BE MINDFUL OF HOW MUCH YOU UNLOCK</p>
                     </details>
+                    
+                    <p style="margin-top: 2rem; border-top: 1px dashed var(--dim-text); padding-top: 1rem;">
+                        <a href="#" onclick="openTab('main'); return false;">&lt; Return to Quick Start Guide</a> | <a href="#" onclick="openTab('settings'); return false;">Settings Guide</a>
+                    </p>
                 </div>
 
                 <!-- FAQ -->
@@ -493,7 +536,7 @@
                     <h4>Search doesn't work / "API search failed"</h4>
                     <ul>
                         <li>You need an API key to search for games</li>
-                        <li>Get your key from <code>https://manifest.morrenus.xyz/api-keys/user</code></li>
+                        <li>Get your key from <a href="https://manifest.morrenus.xyz/api-keys/user" target="_blank">https://manifest.morrenus.xyz/api-keys/user</a></li>
                         <li>Make sure you're logged in with Discord and in the Morrenus server</li>
                         <li>Paste the key in Settings (Gear Icon) and click OK</li>
                     </ul>
@@ -533,6 +576,10 @@
 
                     <h4>Can't change colors</h4>
                     <p>Some color combinations are blocked for readability. Due to this fact and the fact that it is hard to account for all color combinations, we've had to set some limits to the color pickers.</p>
+
+                    <p style="margin-top: 2rem; border-top: 1px dashed var(--dim-text); padding-top: 1rem;">
+                        <a href="#" onclick="openTab('main'); return false;">&lt; Return to Quick Start Guide</a>
+                    </p>
                 </div>
 
             </div>
