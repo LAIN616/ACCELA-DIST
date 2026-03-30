@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>navi://accela.node/docs - Documentation</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap');
+
+        :root {
+            --bg-color: #000000;
+            --text-color: #e38695;
+            --dim-text: #964d5c;
+            --alert-color: #ff3344;
+            --glow: 0 0 10px rgba(227, 134, 149, 0.5);
+            --font-main: 'Share Tech Mono', 'Courier New', Courier, monospace;
+            --font-title: 'VT323', monospace;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-main);
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            cursor: crosshair;
+            padding: 2rem 1rem;
+        }
+
+        /* Background & CRT Effects */
+        .bg-image {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 1; opacity: 0.15; pointer-events: none;
+            background-image: url('./main.gif');
+            background-position: center; background-repeat: no-repeat; background-size: auto 70vh;
+        }
+        .scanlines {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 3px, 3px 100%; z-index: 100; pointer-events: none;
+        }
+        .vignette {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: radial-gradient(circle, rgba(0,0,0,0) 60%, rgba(0,0,0,0.8) 100%);
+            z-index: 99; pointer-events: none;
+        }
+        .flicker { animation: crt-flicker 0.15s infinite; }
+        @keyframes crt-flicker { 0% { opacity: 0.95; } 50% { opacity: 1; } 100% { opacity: 0.98; } }
+
+        /* Layout */
+        #main-interface {
+            width: 100%; max-width: 1100px;
+            padding: 2rem; border: 1px solid var(--dim-text);
+            background: rgba(10, 0, 5, 0.85); backdrop-filter: blur(5px);
+            box-shadow: inset 0 0 20px rgba(80, 20, 30, 0.5), 0 0 15px rgba(227, 134, 149, 0.1);
+            z-index: 10; position: relative;
+            display: flex; flex-direction: column;
+        }
+
+        header {
+            border-bottom: 2px solid var(--dim-text); padding-bottom: 1rem; margin-bottom: 2rem;
+            display: flex; justify-content: space-between; align-items: flex-end;
+        }
+        h1 { font-family: var(--font-title); font-size: 2.5rem; text-shadow: var(--glow); letter-spacing: 2px; }
+        
+        .doc-layout { display: flex; gap: 2rem; flex: 1; }
+        
+        /* Sidebar */
+        .sidebar { width: 250px; border-right: 1px dashed var(--dim-text); padding-right: 1rem; flex-shrink: 0; }
+        .sidebar button {
+            display: block; width: 100%; text-align: left; background: none; border: none;
+            color: var(--dim-text); font-family: var(--font-main); font-size: 1rem;
+            padding: 0.5rem; margin-bottom: 0.5rem; cursor: pointer; transition: all 0.2s;
+        }
+        .sidebar button:hover, .sidebar button.active {
+            color: var(--bg-color); background-color: var(--text-color); font-weight: bold;
+        }
+        .sidebar .back-link {
+            display: inline-block; margin-bottom: 2rem; color: var(--text-color); text-decoration: none; border-bottom: 1px solid var(--text-color);
+        }
+
+        /* Content Area */
+        .content-area { flex: 1; padding-bottom: 2rem; }
+        .tab-content { display: none; line-height: 1.6; }
+        .tab-content.active { display: block; animation: bootUp 0.3s ease-out; }
+        
+        @keyframes bootUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Typography inside Docs */
+        h2 { font-size: 1.8rem; margin: 2rem 0 1rem 0; border-bottom: 1px solid var(--dim-text); padding-bottom: 0.3rem; }
+        h3 { font-size: 1.3rem; margin: 1.5rem 0 0.5rem 0; color: #ffb8c6; }
+        p { margin-bottom: 1rem; }
+        ul, ol { margin-bottom: 1rem; padding-left: 2rem; }
+        li { margin-bottom: 0.4rem; }
+        a { color: inherit; text-decoration: underline; text-decoration-style: dashed; cursor: pointer; }
+        a:hover { color: #fff; text-shadow: var(--glow); }
+        
+        code { background: rgba(227, 134, 149, 0.15); padding: 2px 6px; font-family: monospace; font-size: 0.95em; border: 1px solid var(--dim-text); }
+        pre { background: rgba(0,0,0,0.5); padding: 1rem; border: 1px solid var(--dim-text); overflow-x: auto; margin-bottom: 1rem; }
+        pre code { background: none; border: none; padding: 0; }
+        
+        strong { color: #ffb8c6; }
+        .warning { color: var(--alert-color); font-weight: bold; }
+        
+        details { background: rgba(227, 134, 149, 0.05); border: 1px solid var(--dim-text); padding: 0.5rem 1rem; margin-bottom: 1rem; }
+        summary { cursor: pointer; font-weight: bold; margin-bottom: 0.5rem; }
+        details[open] summary { border-bottom: 1px dashed var(--dim-text); padding-bottom: 0.5rem; margin-bottom: 1rem; }
+
+        @media (max-width: 768px) {
+            .doc-layout { flex-direction: column; }
+            .sidebar { width: 100%; border-right: none; border-bottom: 1px dashed var(--dim-text); padding-right: 0; padding-bottom: 1rem; }
+        }
+    </style>
+</head>
+<body class="flicker">
+    <div class="bg-image"></div>
+    <div class="scanlines"></div>
+    <div class="vignette"></div>
+
+    <main id="main-interface">
+        <header>
+            <div>
+                <h1>Navi // Accela_Docs</h1>
+                <p>Knowledge Base & System Integration Manuals</p>
+            </div>
+        </header>
+
+        <div class="doc-layout">
+            <nav class="sidebar">
+                <a href="./index.html" class="back-link">< RETURN TO HUB</a>
+                <p style="margin-bottom: 1rem; color: var(--dim-text); font-size: 0.8rem;">INDEX:</p>
+                <button onclick="openTab('main')" id="btn-main" class="active">Quick Start Guide</button>
+                <button onclick="openTab('library')" id="btn-library">Game Library</button>
+                <button onclick="openTab('settings')" id="btn-settings">Settings</button>
+                <button onclick="openTab('audio')" id="btn-audio">Audio Customization</button>
+                <button onclick="openTab('style')" id="btn-style">Style Customization</button>
+                <p style="margin: 1.5rem 0 1rem 0; color: var(--dim-text); font-size: 0.8rem;">STEAM INTEGRATION:</p>
+                <button onclick="openTab('slssteam')" id="btn-slssteam">SLSsteam (Linux)</button>
+                <button onclick="openTab('greenluma')" id="btn-greenluma">GreenLuma (Windows)</button>
+                <p style="margin: 1.5rem 0 1rem 0; color: var(--dim-text); font-size: 0.8rem;">SUPPORT:</p>
+                <button onclick="openTab('faq')" id="btn-faq">FAQ & Troubleshooting</button>
+            </nav>
+
+            <div class="content-area">
+                
+                <!-- QUICK START GUIDE -->
+                <div id="main" class="tab-content active">
+                    <h2>ACCELA - Quick Start Guide</h2>
+                    <h3>What is ACCELA?</h3>
+                    <p>ACCELA is a game downloader and manager that works with the Morrenus API. It lets you search for games, download them, and manage your game library with a stylish interface inspired by Serial Experiments Lain.</p>
+                    
+                    <h3>First Steps</h3>
+                    <h4>Steam Integration (Skip if you don't want this)</h4>
+                    <p><strong>Add games directly to your Steam library</strong> using <a onclick="openTab('slssteam')">SLSsteam (Linux)</a> or <a onclick="openTab('greenluma')">GreenLuma (Windows)</a> integration for full Steam functionality with downloaded games.</p>
+                    
+                    <h4>Getting Your API Key (Required for Search)</h4>
+                    <p>Before you can search for games, you need to get an API key:</p>
+                    <ol>
+                        <li>Go to <code>https://manifest.morrenus.xyz/</code></li>
+                        <li>Log in with Discord (you must be in the Morrenus Discord server)</li>
+                        <li>After logging in, go to <code>https://manifest.morrenus.xyz/api-keys/user</code></li>
+                        <li>Create a new API Key (also make a New Request to make sure your keys last longer so that you don't need to regenerate them later)</li>
+                        <li>Copy your API key</li>
+                        <li>Open ACCELA Settings (Gear icon), go to the <strong>Integrations</strong> tab, and paste your key in the "Morrenus API Key" field.</li>
+                        <li>Click OK to save.</li>
+                    </ol>
+
+                    <h3>1. Getting Games</h3>
+                    <p><strong>Method 1: Search & Download</strong> (requires API key)</p>
+                    <ul>
+                        <li>Click the <strong>Search button</strong> (Magnifying Glass)</li>
+                        <li>Type a game name and press Enter</li>
+                        <li>Double-click a result to download it</li>
+                    </ul>
+                    <p><strong>Method 2: Drag & Drop</strong> (no API key needed)</p>
+                    <ul>
+                        <li>Download manifest ZIP files on your computer</li>
+                        <li>Drag them directly onto the main window</li>
+                    </ul>
+
+                    <h3>2. Managing Your Games</h3>
+                    <ul>
+                        <li>Click the <strong>Game Library button</strong> (Book Icon) to see all your installed games.</li>
+                        <li>Click any game to open its details, split into three tabs: <strong>Overview</strong>, <strong>Tools</strong>, and <strong>Uninstall</strong>.</li>
+                        <li>From the <strong>Tools</strong> tab, you can manually remove DRM with Steamless, fix install manifests, or apply/remove the Goldberg emulator.</li>
+                        <li>Use the "Scan Libraries" button at the top if games are missing.</li>
+                    </ul>
+
+                    <h3>3. Customizing Your Experience</h3>
+                    <p>Click the <strong>Gear button</strong> to open Settings and customize ACCELA:</p>
+                    <ul>
+                        <li><strong>Downloads Tab:</strong> Enable automatic DRM removal (Steamless), auto-apply Goldberg, or toggle Steam Achievement generation.</li>
+                        <li><strong>Steam Tab:</strong> Enable SLSsteam or GreenLuma wrapper mode and allow ACCELA to manage your configuration files.</li>
+                        <li><strong>Audio Tab:</strong> Control playback of the background hum, intro/exit sounds, and adjust master/effects volumes.</li>
+                        <li><strong>Style Tab:</strong> Change your accent and background colors, customize your font, toggle the GIF display, or move the titlebar to the top.</li>
+                    </ul>
+
+                    <h3>Need Help?</h3>
+                    <p>Check the detailed guides below for specific features, or look at the <a onclick="openTab('faq')">FAQ</a> for common issues.</p>
+                </div>
+
+                <!-- GAME LIBRARY GUIDE -->
+                <div id="library" class="tab-content">
+                    <h2>Game Library Guide</h2>
+                    <h3>Opening Your Library</h3>
+                    <p>Click the <strong>Game Library Settings</strong> (Book Icon).</p>
+
+                    <h3>Viewing Your Games</h3>
+                    <ul>
+                        <li>The library automatically shows games you installed through ACCELA</li>
+                        <li>Games display with header pictures, names, and how much space each uses</li>
+                        <li><strong>Update Status:</strong> Each game will clearly show if it is "Up to date", "Checking for updates...", or has a "New version available"</li>
+                        <li><strong>Sorting:</strong> Use the dropdown at the top to sort your library by Recently Installed, Name, Size, or AppID</li>
+                    </ul>
+
+                    <h3>Game Details & Management</h3>
+                    <p>Clicking on any game in your list opens the Game Details window, which is split into three tabs:</p>
+
+                    <h4>1. Overview Tab</h4>
+                    <ul>
+                        <li>View specific game information including the App ID, exact size, and installation path</li>
+                        <li><strong>Download Update / Validate Files:</strong> Triggers a download if a new version is available, or validates your existing files</li>
+                        <li><strong>Open Folder:</strong> Quickly opens the game's installation directory on your computer</li>
+                    </ul>
+
+                    <h4>2. Tools Tab</h4>
+                    <ul>
+                        <li><strong>Remove DRM (Steamless):</strong> Automatically runs Steamless on the game's executables to remove DRM</li>
+                        <li><strong>Fix Install (Remove .acf):</strong> Deletes the game's manifest file. This forces Steam to re-verify the game files the next time you try to play it</li>
+                        <li><strong>Apply / Remove Goldberg:</strong> Easily toggle the Goldberg emulator on or off for the selected game</li>
+                    </ul>
+
+                    <h4>3. Uninstall Tab</h4>
+                    <ul>
+                        <li>Click "Uninstall Game" to remove the game and its files from your drive</li>
+                        <li>You will be asked to confirm before anything is deleted</li>
+                    </ul>
+
+                    <h3>Linux Users (Extra Options)</h3>
+                    <p>When managing games on Linux, you have access to a few platform-specific features:</p>
+                    <ul>
+                        <li><strong>FakeAppId Support (Overview Tab):</strong> Check "Add to SLSonline as:" and enter an AppID (e.g., 480 for Spacewar)</li>
+                        <li><strong>Uninstall Options:</strong> When uninstalling, you may see options to:
+                            <ul>
+                                <li><strong>Remove Proton/Wine Data</strong> - Deletes compatibility data (which may include local saves)</li>
+                                <li><strong>Remove Cloud Saves</strong> - Deletes your Steam Cloud saves for that specific game</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <h3>Finding Missing Games</h3>
+                    <ul>
+                        <li>Use the <strong>Scan Libraries</strong> button at the top if games don't appear</li>
+                        <li>This searches all your Steam folders for ACCELA-installed games and checks for updates</li>
+                    </ul>
+                </div>
+
+                <!-- SETTINGS GUIDE -->
+                <div id="settings" class="tab-content">
+                    <h2>Settings Guide</h2>
+                    <h3>Accessing Settings</h3>
+                    <p>Click the <strong>Settings Button</strong> (Gear Icon) in the bottom title bar.</p>
+
+                    <h3>Main Settings</h3>
+
+                    <h4>Morrenus API Key (Required for Search)</h4>
+                    <p><strong>How to get your API key:</strong></p>
+                    <ol>
+                        <li>Visit <code>https://manifest.morrenus.xyz/</code></li>
+                        <li>Log in with Discord (must be in Morrenus Discord server)</li>
+                        <li>Go to <code>https://manifest.morrenus.xyz/api-keys/user</code></li>
+                        <li>Create a new API Key and copy it</li>
+                        <li>Paste it in the API Key field in Settings (Gear Icon)</li>
+                        <li>Click OK to save</li>
+                    </ol>
+                    <p><strong>Why you need it:</strong> Required for searching and downloading games from the Morrenus database. Without it, you can only use drag & drop with your own manifest ZIP files.</p>
+
+                    <h4>SLSsteam Mode</h4>
+                    <ul>
+                        <li><strong>What it does:</strong> Installs games directly into your Steam library</li>
+                        <li><strong>Windows:</strong> Uses GreenLuma for compatibility</li>
+                        <li><strong>Linux:</strong> Uses SLSsteam for compatibility</li>
+                        <li><strong>When to use:</strong> Enable this if you want games to appear in your Steam library</li>
+                    </ul>
+
+                    <h4>Steam Achievement Generation</h4>
+                    <ul>
+                        <li><strong>What it does:</strong> Automatically generates Steam achievement data after downloads</li>
+                        <li><strong>Requires:</strong> You must click "Run SLScheevo" first to log in with your Steam account</li>
+                        <li><strong>How it works:</strong> Uses SLScheevo behind the scenes to create achievement stats</li>
+                    </ul>
+
+                    <h4>Steam DRM Removal</h4>
+                    <ul>
+                        <li><strong>What it does:</strong> Removes Steam DRM protection from downloaded games</li>
+                        <li><strong>Fixes errors:</strong> Prevents launch errors like "6:0000065432" when playing games you don't own</li>
+                        <li><strong>Tool used:</strong> Steamless (automatically runs after download)</li>
+                    </ul>
+
+                    <h3>SLScheevo Setup (Required for Achievements)</h3>
+                    <h4>First-Time Setup:</h4>
+                    <ol>
+                        <li>Click the <strong>"Run SLScheevo"</strong> button in Settings</li>
+                        <li>Follow the instructions in the terminal to log in with your Steam account</li>
+                        <li>Once logged in, SLScheevo will save your credentials</li>
+                        <li>Close SLScheevo when done</li>
+                    </ol>
+                    <p>After setup, achievement generation will work automatically after downloads. No need to run SLScheevo again unless you change Steam accounts.</p>
+                </div>
+
+                <!-- AUDIO GUIDE -->
+                <div id="audio" class="tab-content">
+                    <h2>Audio Settings Guide</h2>
+                    <h3>Accessing Audio Settings</h3>
+                    <p>Click the <strong>Audio Settings Button</strong> (Volume Icon)</p>
+
+                    <h3>Basic Controls</h3>
+                    <h4>Sound Effects</h4>
+                    <ul>
+                        <li><strong>"Entering The Wired"</strong> - Plays when app starts (toggle on/off)</li>
+                        <li><strong>"Let's All Love Lain"</strong> - Plays when app closes (toggle on/off)</li>
+                        <li><strong>50Hz Hum</strong> - Background atmosphere noise (toggle on/off)</li>
+                    </ul>
+
+                    <h4>Volume Sliders</h4>
+                    <ul>
+                        <li><strong>Master Volume</strong> - Overall sound level (default: 80%)</li>
+                        <li><strong>Effects Volume</strong> - UI and effect sounds (default: 50%)</li>
+                        <li><strong>Hum Volume</strong> - Background noise level (default: 20%)</li>
+                    </ul>
+
+                    <h3>Using the Audio Settings</h3>
+                    <ol>
+                        <li><strong>Test Sounds First</strong> - Use the "Test ETW Sound" and "Test LALL Sound" buttons to hear how they will sound</li>
+                        <li><strong>Adjust Volumes</strong> - Move sliders to your preferred levels</li>
+                        <li><strong>Enable/Disable</strong> - Check boxes for sounds you want to hear</li>
+                        <li><strong>Click OK</strong> - To save your settings</li>
+                    </ol>
+                </div>
+
+                <!-- STYLE GUIDE -->
+                <div id="style" class="tab-content">
+                    <h2>Style Customization Guide</h2>
+                    <h3>Accessing Style Settings</h3>
+                    <p>Open <strong>Settings</strong> (Gear Icon) and navigate to the <strong>Style</strong> tab.</p>
+
+                    <h3>What You Can Change</h3>
+                    <h4>Color Settings</h4>
+                    <ul>
+                        <li><strong>Accent Color:</strong> Affects buttons, progress bars, text highlights, and icons. Default is Pink (#C06C84).</li>
+                        <li><strong>Background Color:</strong> Affects the main window background and title bar. Default is Black (#000000).</li>
+                        <li><strong>Ignore color warnings:</strong> Check this box to bypass the safety checks that prevent you from picking colors that are too dark or lack contrast.</li>
+                    </ul>
+
+                    <h4>Font Settings</h4>
+                    <ul>
+                        <li>Click <strong>Choose Font</strong> to customize the text family, size, and style (such as Bold or Italic) used throughout the application.</li>
+                        <li>Click <strong>Reset</strong> to return to the default font (TrixieCyrG-Plain, 10pt).</li>
+                    </ul>
+
+                    <h4>Display Settings</h4>
+                    <ul>
+                        <li><strong>Move Titlebar to Top:</strong> Shifts the titlebar from its default bottom position to the top of the window.</li>
+                        <li><strong>Enable Sonic Mode:</strong> Applies a special Sonic-themed color palette (#ffcc00 accent and #002c83 background), custom font, and default media resources.</li>
+                        <li><strong>Show GIF Display:</strong> Toggle the animated GIF on or off in the main window.</li>
+                    </ul>
+
+                    <h4>Custom GIFs</h4>
+                    <ul>
+                        <li>Click <strong>Custom Gifs</strong> to open the GIF configuration dialog and personalize your animations.</li>
+                        <li>Click <strong>Clear GIF Cache</strong> to force the application to regenerate all GIFs with your current color settings.</li>
+                    </ul>
+
+                    <h3>How to Apply Changes</h3>
+                    <ol>
+                        <li>Adjust your desired colors, fonts, and display preferences within the Style tab.</li>
+                        <li>Click <strong>OK</strong> at the bottom of the Settings window to apply your changes to the entire app.</li>
+                        <li><em>Note:</em> If your chosen background and accent colors are too similar and you haven't checked "Ignore color warnings," the app will warn you and prevent saving.</li>
+                    </ol>
+                    <p><strong>What Doesn't Change Instantly:</strong> GIFs take around 2-7s to recolor based on your preferences and then get cached. Do not think your application has crashed; it is just recoloring the GIFs in the background.</p>
+                </div>
+
+                <!-- SLSSTEAM GUIDE -->
+                <div id="slssteam" class="tab-content">
+                    <h2>SLSsteam Setup Guide (Linux)</h2>
+                    <p><strong>What is SLSsteam?</strong> SLSsteam is a shared object (.so) preload that adds various enhancements to your Steam client, providing advanced functionality for games not officially owned.</p>
+
+                    <h3>Features</h3>
+                    <ul>
+                        <li><strong>Disable Family Sharing license lock</strong> (works for your account and others')</li>
+                        <li><strong>Unlock DLCs</strong> (supports blacklist/whitelist modes)</li>
+                        <li><strong>Force-enable DLCs</strong> not in the Steam store</li>
+                        <li><strong>Play games you don't own</strong> (via manifest or manual method)</li>
+                    </ul>
+
+                    <h3>Prerequisites (Steam Deck / Immutable Systems)</h3>
+                    <p>If you are on Steam Deck or have an immutable file system (like Bazzite), follow these steps before installing:</p>
+                    <ol>
+                        <li>Set a sudo password: <code>sudo passwd</code></li>
+                        <li>Make the filesystem writable (Steam Deck): <code>sudo steamos-readonly disable</code></li>
+                        <li>Have a text editor installed and set your file browser to show hidden files.</li>
+                    </ol>
+
+                    <h3>Installation</h3>
+                    <ol>
+                        <li><strong>Download & Extract:</strong> Grab the latest release from the <a href="https://github.com/AceSLS/SLSsteam" target="_blank">GitHub repo</a>.</li>
+                        <li><strong>Run Setup Script:</strong> Open a terminal in that directory and run: <code>./setup.sh install</code></li>
+                        <li><strong>Configure SLSsteam:</strong> Navigate to <code>~/.config/SLSsteam/</code> and open the config file. Enable: <code>playNotOwnedGames = Yes</code></li>
+                        <li><strong>Enable in ACCELA:</strong> Go to Settings > Steam tab. Enable <strong>SLSsteam Config Management</strong> and <strong>Prompt Steam Restart</strong>.</li>
+                        <li><strong>Set Proton Compatibility:</strong> Right click the game in Steam > Properties > Compatibility > Force the use of a specific Steam Play compatibility tool.</li>
+                    </ol>
+
+                    <h3>Steam Deck Game Mode Instructions</h3>
+                    <p class="warning">WARNING: This can potentially softbrick your steamdeck and will require a Deck recovery image to fix!</p>
+                    
+                    <h4>Method 1: Permanent Modification</h4>
+                    <ol>
+                        <li>Navigate to: <code>/usr/bin</code></li>
+                        <li>Find the <code>steam-jupiter</code> script and <strong>make a backup</strong>!</li>
+                        <li>Edit the script and change:<br>
+                            <code>exec /usr/lib/steam/steam -steamdeck "$@"</code><br>
+                            To:<br>
+                            <code>exec env LD_AUDIT="/home/deck/.local/share/SLSsteam/library-inject.so:/home/deck/.local/share/SLSsteam/SLSsteam.so" -steamdeck "$@"</code>
+                        </li>
+                    </ol>
+
+                    <h4>Method 2: Temporary (Safer)</h4>
+                    <p>Run this command before starting Steam in Game Mode:</p>
+                    <code>env LD_AUDIT="/home/deck/.local/share/SLSsteam/library-inject.so:/home/deck/.local/share/SLSsteam/SLSsteam.so" steam</code>
+                </div>
+
+                <!-- GREENLUMA GUIDE -->
+                <div id="greenluma" class="tab-content">
+                    <h2>GreenLuma Setup Guide (Windows)</h2>
+                    
+                    <details>
+                        <summary>What is GreenLuma?</summary>
+                        <p>GreenLuma is a DLL injection tool for Steam that unlocks advanced features, allowing you to play games not in your library and access DLC content.</p>
+                    </details>
+                    
+                    <details>
+                        <summary>Important Disclaimer</summary>
+                        <p>This guide involves modifying system settings and using third-party software. Proceed at your own risk. It is highly recommended to backup your system and only download GreenLuma from trusted sources.</p>
+                    </details>
+
+                    <details open>
+                        <summary>Part 1: Initial GreenLuma Setup</summary>
+                        <h4>Step 1: Download GreenLuma</h4>
+                        <p>Navigate to the <a href="https://cs.rin.ru/forum/viewtopic.php?f=29&t=103709" target="_blank">official GreenLuma thread</a> and download the latest version.</p>
+
+                        <h4>Step 2: Extract Files to Your Steam Folder</h4>
+                        <p>Locate your main Steam installation folder (e.g., <code>C:\Program Files (x86)\Steam</code>). Extract the GreenLuma files directly into this main folder. Extract <code>x64launcher.exe</code> into the <code>bin</code> folder inside your Steam directory.</p>
+
+                        <h4>Step 3: Create the "AppList" Folder</h4>
+                        <p>In your main Steam directory, create a new folder named <code>AppList</code>.</p>
+
+                        <h4>Step 4: Configure Settings</h4>
+                        <p>Run <code>GreenLumaSettings_2026.exe</code> as administrator. Enable <strong>No Question Mode</strong> and <strong>Stealth Mode</strong>, then save.</p>
+
+                        <h4>Step 5: NoQuestion.bin and StealthMode.bin</h4>
+                        <p>Either create new .txt files named NoQuestion and StealthMode and change file extention to .bin in your steam directory, or use the supplied files. Make sure to make these files READ-ONLY!</p>
+                    </details>
+
+                    <details>
+                        <summary>Part 2: Running Games with GreenLuma (Manual Start)</summary>
+                        <p class="warning">Important: Whenever you wish to run games under GreenLuma's influence, you must start Steam by launching <code>DLLInjector.exe</code> from your main Steam folder. Do NOT launch Steam directly from its usual shortcut or Steam.exe.</p>
+                    </details>
+
+                    <details>
+                        <summary>Integration with ACCELA</summary>
+                        <h4>Setup in ACCELA:</h4>
+                        <ol>
+                            <li>Open ACCELA Settings (Gear Icon)</li>
+                            <li>Open the <strong>Steam</strong> tab</li>
+                            <li>Enable both <strong>GreenLuma Wrapper Mode</strong> and <strong>GreenLuma Config Management</strong></li>
+                            <li>Click <strong>OK</strong> to save</li>
+                        </ol>
+                        <p class="warning">IMPORTANT NOTE: YOU CAN ONLY UNLOCK 134 APPIDS AT A TIME, DLC ARE INCLUDED IN THAT COUNT. BE MINDFUL OF HOW MUCH YOU UNLOCK</p>
+                    </details>
+                </div>
+
+                <!-- FAQ -->
+                <div id="faq" class="tab-content">
+                    <h2>FAQ & Troubleshooting</h2>
+                    
+                    <h3>Common Issues</h3>
+                    
+                    <h4>Search doesn't work / "API search failed"</h4>
+                    <ul>
+                        <li>You need an API key to search for games</li>
+                        <li>Get your key from <code>https://manifest.morrenus.xyz/api-keys/user</code></li>
+                        <li>Make sure you're logged in with Discord and in the Morrenus server</li>
+                        <li>Paste the key in Settings (Gear Icon) and click OK</li>
+                    </ul>
+
+                    <h4>The app won't start</h4>
+                    <ul>
+                        <li>ACCELA was made for Win10, Win11, and any Linux distribution including the Steam Deck</li>
+                        <li>Make an issue for help regarding your platform or setup</li>
+                    </ul>
+
+                    <h4>Drag and drop doesn't work</h4>
+                    <ul>
+                        <li>Only ZIP files can be dropped</li>
+                        <li>Make sure the zip is a valid manifest file containing .lua files</li>
+                    </ul>
+
+                    <h4>No sound</h4>
+                    <ul>
+                        <li>Check Audio Settings are enabled</li>
+                        <li>Make sure your system volume isn't muted</li>
+                        <li>Make sure the application is not muted in your systems volume mixer</li>
+                        <li>Test with the audio preview buttons</li>
+                    </ul>
+
+                    <h4>Downloads are slow</h4>
+                    <ul>
+                        <li>We download game files from Valves servers using DepotDownloaderMod</li>
+                        <li>If you experience slow downloads it is either with steams servers or your own connection</li>
+                    </ul>
+
+                    <h4>Games don't appear in library</h4>
+                    <ul>
+                        <li><strong>IMPORTANT:</strong> Only shows games installed through ACCELA</li>
+                        <li>Internally this is handled by locating a <code>.DepotDownloader</code> folder inside your game folder. If you want ACCELA to handle a game not downloaded through ACCELA, create this folder.</li>
+                        <li>Click "Scan Steam Libraries" to refresh</li>
+                    </ul>
+
+                    <h4>Can't change colors</h4>
+                    <p>Some color combinations are blocked for readability. Due to this fact and the fact that it is hard to account for all color combinations, we've had to set some limits to the color pickers.</p>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Tab Navigation Logic
+        function openTab(tabId) {
+            // Hide all contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            // Remove active state from all buttons
+            document.querySelectorAll('.sidebar button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected content and highlight button
+            document.getElementById(tabId).classList.add('active');
+            document.getElementById('btn-' + tabId).classList.add('active');
+            
+            // Scroll to top of content area on mobile
+            if(window.innerWidth <= 768) {
+                document.querySelector('.content-area').scrollIntoView({ behavior: 'smooth' });
+            } else {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+    </script>
+</body>
+</html>
