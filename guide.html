@@ -34,7 +34,7 @@
         /* Background & CRT Effects */
         .bg-image {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: 1; opacity: 0.15; pointer-events: none;
+            z-index: 1; opacity: 0.4; pointer-events: none; /* Increased from 0.15 */
             background-image: url('./main.gif');
             background-position: center; background-repeat: no-repeat; background-size: auto 70vh;
         }
@@ -56,7 +56,7 @@
         #main-interface {
             width: 100%; max-width: 1100px;
             padding: 2rem; border: 1px solid var(--dim-text);
-            background: rgba(10, 0, 5, 0.85); backdrop-filter: blur(5px);
+            background: rgba(10, 0, 5, 0.65); backdrop-filter: blur(3px); /* Adjusted for better GIF visibility */
             box-shadow: inset 0 0 20px rgba(80, 20, 30, 0.5), 0 0 15px rgba(227, 134, 149, 0.1);
             z-index: 10; position: relative;
             display: flex; flex-direction: column;
@@ -118,6 +118,7 @@
     </style>
 </head>
 <body class="flicker">
+    <audio id="ambient-bgm" src="./loop.wav" loop></audio>
     <div class="bg-image"></div>
     <div class="scanlines"></div>
     <div class="vignette"></div>
@@ -587,6 +588,20 @@
     </main>
 
     <script>
+        // --- Audio Handling ---
+        window.onload = () => {
+            const bgm = document.getElementById('ambient-bgm');
+            bgm.volume = 0.4;
+            
+            // Attempt to autoplay
+            bgm.play().catch(() => {
+                // If browser blocks autoplay, wait for first click anywhere
+                document.addEventListener('click', () => {
+                    bgm.play();
+                }, { once: true });
+            });
+        };
+
         // Tab Navigation Logic
         function openTab(tabId) {
             // Hide all contents
