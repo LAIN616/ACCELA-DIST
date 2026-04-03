@@ -217,6 +217,19 @@
             50% { opacity: 0; }
         }
 
+        /* Hidden Elements */
+        .phantom-zone {
+            position: fixed; bottom: 10px; right: 15px; font-size: 0.75rem; 
+            opacity: 0.02; transition: opacity 2s, color 0.5s; z-index: 9999;
+        }
+        .phantom-zone:hover { opacity: 1; color: var(--alert-color); text-shadow: 0 0 10px var(--alert-color); }
+        .phantom-zone a { color: inherit; text-decoration: none; cursor: url('./cursor2.gif'), pointer; }
+        
+        .cryptic {
+            color: rgba(0, 0, 0, 0.01); user-select: text; font-size: 0.85rem; margin-bottom: 0.5rem; line-height: 1;
+        }
+        .cryptic::selection { background: var(--text-color); color: var(--bg-color); }
+
         footer {
             margin-top: 3rem;
             text-align: center;
@@ -237,10 +250,15 @@
     </style>
 </head>
 <body class="flicker">
+    <!-- Dc1029: 先生は私を愛してる？ -->
     <audio id="ambient-bgm" src="./loop.wav" loop></audio>
     <div class="bg-image" id="dynamic-bg"></div>
     <div class="scanlines"></div>
     <div class="vignette"></div>
+
+    <div class="phantom-zone">
+        <a href="https://3d.laingame.net/game.html" target="_blank">記憶の再構築_</a>
+    </div>
 
     <!-- Boot Sequence -->
     <div id="boot-screen"></div>
@@ -259,17 +277,23 @@
             </div>
         </header>
 
+        <p class="cryptic">Tk0114: 彼女はただの患者じゃない。彼女は...</p>
+        <p class="cryptic">Dc1024: 先生は、私のことどう思ってる？</p>
+
         <div class="quote-block">
             "No matter where you are, everyone is always connected."<br>
             <span style="font-size: 0.8rem; color: var(--dim-text);">-- Close the world, Open the nExt.</span>
+            <p class="cryptic" style="margin-top: 10px;">Dc1044: ワイヤードとリアルは、もう境界がないの。</p>
         </div>
 
         <div style="margin-bottom: 2rem; border: 1px solid var(--dim-text); padding: 1rem; background: rgba(227, 134, 149, 0.05);">
             <p>> <a href="./guide.html" class="glitch-link" data-text="ACCESS_DOCUMENTATION_ARCHIVE">ACCESS_DOCUMENTATION_ARCHIVE</a></p>
             <p style="font-size: 0.85rem; color: var(--dim-text); margin-top: 0.5rem;">Contains setup instructions, Steam integration guides, and troubleshooting.</p>
+            <p class="cryptic" style="margin-top: 10px;">Tk0135: 記録はすべて、このアーカイヴの闇に隠蔽された...</p>
         </div>
 
         <p>AVAILABLE PHARMA-CODE / ACCELA RELEASES:</p>
+        <p class="cryptic">プロトコル7は、私たちの意識を繋ぐ。</p>
 
         <table class="directory">
             <thead>
@@ -296,16 +320,29 @@
     </main>
 
     <script>
+        // --- Cryptic Console Logs ---
+        console.log("%c 柊子先生、私は本物ですか？ ", "color: rgba(227, 134, 149, 0.2); font-size: 12px;");
+        console.log("%c Tk0134: レイン、どこにいるの？助けて... ", "color: rgba(227, 134, 149, 0.15); font-size: 11px;");
+        console.log("%c 記録は書き換えられている... アーカイヴ（DOCUMENTATION）を調べて... ", "color: rgba(227, 134, 149, 0.05); font-size: 10px;");
+
         // --- Boot Sequence Logic ---
         const bootText = [
             "Copland OS Enterprise v9.0.2",
             "Initializing hardware...",
-            "Loading memory modules... OK",
+            "Loading memory modules... ERR: 記憶の混濁",
             "Establishing connection to The Wired...",
+            "Tk0112: 彼女が何を考えているのか、全く分からない。",
             "WARNING: Unregistered protocol detected.",
             "Bypassing Knights firewall protocols...",
+            "Dc1029: 先生は私を愛してる？",
+            "Decrypting subsystem...",
+            "Tk0128: 彼女がシステムを浸食している... 私の記録が...",
             "Accessing shadow node...",
+            "WARNING: 肉体との同期を完全喪失。",
+            "Dc1056: 肉体って、本当は邪魔なのかな。",
+            "Dc1059: ここには誰もいない。私しかいない。",
             "ACCELA distribution directory found.",
+            "Tk0135: 彼女の真実は、ドキュメント・アーカイヴに沈められた...",
             "Handshake complete.",
             "..."
         ];
